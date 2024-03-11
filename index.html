@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title> Skein Calculator </title>
+    
+    </head>
+
+    <style>
+        body {
+             background-color: #FFFFED;
+            font-family: Arial, sans-serif; 
+                }
+        h1 {text-align: center;}
+        p {text-align: center;
+            width: 700px;
+            height: 100px;
+            margin: 0 auto;}
+        label {text-align: center;}
+        div {text-align: center;}
+        input {text-align: center;
+            width: 150px;
+    border: 1px solid #ccc; 
+    border-radius: 5px;
+    margin-bottom: 10px;}
+    
+    input[type="button"] {
+    padding: 10px 20px;
+    background-color: #d7e2ef; 
+    color: #000000; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;}
+
+    </style>
+    <body>
+        <h1 > Welcome to the Skein Calculator! </h1>
+        <p>Are you embarking on a new knitting or crochet endeavor but unsure about how much yarn to buy? 
+            Say goodbye to guesswork and hello to precision with the Skein Calculator! Whether you're crafting a cozy scarf, or 
+             a stylish sweater, this calculator simplifies the process of estimating yarn needs, ensuring you have just the 
+             right amount to complete your project.</p>
+        <div id = "container">
+            <!--Total Project Area-->
+            <h4>Project Inputs: </h4>
+            <label for="projectLength"> Project Length: </label><br>
+            <input type = "text" id="projectLength" value="0"><br>
+
+            <label for="projectWidth"> Project Width: </label><br>
+            <input type = "text" id="projectWidth" value="0"><br>    
+            <!--Swatch-->
+            <h4>Swatch Inputs: </h4>
+            <label for="weightOfSwatch"> Weight of Swatch: </label><br>
+            <input type = "text" id="weightOfSwatch" value="0"><br>
+
+            <label for="lengthOfSwatch"> Length of Swatch: </label><br>
+            <input type = "text" id="lengthOfSwatch" value="0"><br>
+
+            <label for="widthOfSwatch"> Width of Swatch: </label><br>
+            <input type = "text" id="widthOfSwatch" value="0"><br>
+
+            <!--Yarn-->
+            <h4> Yarn Inputs: </h4>
+            <label for="yarnsYards"> Yarns Yardage: </label><br>
+            <input type = "text" id="yarnsYards" value="0"><br>
+
+            <label for="yarnsGrams"> Yarns Grams: </label><br>
+            <input type = "text" id="yarnsGrams" value="0"><br>
+
+            
+            
+            <h4><label for="total"> Total: </label></h4>
+            <input type="text" id="total" value="0" disabled><br>
+            <br>
+
+            <input type="button" value="Submit" onclick= "calculate()">
+            <input type="button" value="Reset" onclick="reset()">
+
+        </div>
+
+        <script>
+            function reset()
+            {
+                document.getElementById("projectLength").value = "0";
+                document.getElementById("projectWidth").value = "0";
+                document.getElementById("weightOfSwatch").value = "0";
+                document.getElementById("lengthOfSwatch").value = "0";
+                document.getElementById("widthOfSwatch").value = "0";
+                document.getElementById("yarnsYards").value = "0";
+                document.getElementById("yarnsGrams").value = "0";
+                document.getElementById("total").value = "0";
+            }
+
+            function calculate()
+            {
+                // Check if any input field is empty
+            var inputs = document.querySelectorAll('input[type="text"]');
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].value.trim() === "" || inputs[i].value.trim() === "0") {
+                    alert("Please fill in all input fields.");
+                return;
+                }
+                //Project Area
+                var projectLength = Number(document.getElementById("projectLength").value);
+                var projectWidth = Number(document.getElementById("projectWidth").value);
+                var projectArea = projectLength * projectWidth;
+
+                //Swatch Area
+                var lengthOfSwatch = Number(document.getElementById("lengthOfSwatch").value);
+                var widthOfSwatch = Number(document.getElementById("widthOfSwatch").value);
+                var swatchArea = lengthOfSwatch * widthOfSwatch;
+
+                //How many times swatch fits into project
+                var swatchInProject = projectArea/swatchArea;
+
+                //How many grams needed
+                var gramsOfSwatch = Number(document.getElementById("weightOfSwatch").value);
+                var gramsNeeded = swatchInProject * gramsOfSwatch;
+
+                //Yards Per Gram For Yarn
+                var yarnsYards = Number(document.getElementById("yarnsYards").value);
+                var yarnsGrams = Number(document.getElementById("yarnsGrams").value);
+                var yardsPerGram = yarnsYards/yarnsGrams;
+
+                //Yards for Total Project
+                var yardsNeeded = yardsPerGram * gramsNeeded;
+
+                //Total Skeins
+                var totalSkeins = yardsNeeded/yarnsYards;
+                
+
+
+
+                document.getElementById("total").value = String(totalSkeins);
+            }
+        }
+        </script>
+
+    </body>
+
+
+</html>
